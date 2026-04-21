@@ -1,1 +1,65 @@
-<!DOCTYPE html> <html> <head> <meta charset="utf-8" /> <title>Java SE Download URL Converter</title> <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <style> body { margin: 0; font-family: sans-serif; } #inputurl { display: flex; } </style> </head> <body> <h1>Java SE Download URL Converter</h1> <p>Converts a Java SE <strong>8 or lower</strong> download URL into a URL that works without signing in.</p> <form id="urlform"> <input type="url" id="inputurl" placeholder="https://www.oracle.com/webapps/redirect/signon?nexturl=https://download.oracle.com/otn/java/jdk/8u261-b12/a4634525489241b9a9e1aa73d9e118e6/jre-8u261-windows-x64.tar.gz" size="150" required /> <input type="submit" value="Convert" /> </form> <p id="result" /> <script> document.getElementById("urlform").onsubmit = (event) => { event.preventDefault(); let result_paragraph = document.getElementById("result"); let text = document.getElementById("inputurl").value; let url = text.match(/^(https?:\/\/)?(www\.)?oracle\.com\/webapps\/redirect\/signon\?nexturl=(.+)$/); if (!url || !url[3]) url = text; else url = url[3]; let url_match = url.match(/^(https?:\/\/)?download\.oracle\.com\/otn(-pub)?\/java\/jdk\/(\d)u(\d+-b\d+\/([A-Fa-f\d]+\/)?)(.+)$/); if (!url_match || !url_match[6]) { result_paragraph.textContent = `Invalid download URL entered: ${text}`; return; } let i586_word; if (url_match[6].includes('linux')) i586_word = 'linux'; else if (url_match[6].includes('macosx')) i586_word = 'unix'; else if (url_match[6].includes('solaris')) i586_word = 'solaris'; else if (url_match[6].includes('windows')) i586_word = 'windows'; else { result_paragraph.textContent = `Invalid file name entered: ${url_match[6]} (it doesn't seem to contain 'linux', 'solaris', 'macosx' or 'windows')`; return; } let output_url = `https://javadl.oracle.com/webapps/download/GetFile/1.${url_match[3]}.0_${url_match[4]}${i586_word}-i586/${url_match[6]}`; result_paragraph.innerHTML = `Sign-in-free download URL: <a href="${output_url.replace('"', '&quot;')}">${output_url.replace('&', '&amp;').replace('<', '&lt;')}</a><br>(the URL wasn't tested so it isn't guaranteed to work)`; }; </script> <h2>How to use</h2> <ul> <li>Go to the <a href="https://www.oracle.com/java/technologies/javase-jre8-downloads.html">Java SE 8 download page</a> or the <a href="https://www.oracle.com/java/technologies/oracle-java-archive-downloads.html">Archive</a></li> <li>Click a link of your choice</li> <li>Review and accept the License Agreement</li> <li>Right click the green button and copy the URL</li> <li>Paste it here</li> <li>Hope that the link works</li> <li>If it doesn't, you can try a similar version. For example JRE 7 Win x64 doesn't work, while x86 does</li> </ul> <p>Based on <a href="https://gist.github.com/wavezhang/ba8425f24a968ec9b2a8619d7c2d86a6#gistcomment-3377085">this thread</a> on a solution by <a href="https://github.com/rathaROG">rathaROG</a> and <a href="https://github.com/starchivore">starchivore</a>.<br />Made by <a href="https://github.com/KaDiWa4">KaDiWa</a><br />Last updated: 2020-08-09</p> </body> </html>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Java SE Download URL Converter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        body {
+            margin: 0;
+            font-family: sans-serif;
+        }
+        #inputurl {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <h1>Java SE Download URL Converter</h1>
+    <p>Converts a Java SE <strong>8 or lower</strong> download URL into a URL that works without signing in.</p>
+    <form id="urlform">
+        <input type="url" id="inputurl" placeholder="https://www.oracle.com/webapps/redirect/signon?nexturl=https://download.oracle.com/otn/java/jdk/8u261-b12/a4634525489241b9a9e1aa73d9e118e6/jre-8u261-windows-x64.tar.gz" size="150" required />
+        <input type="submit" value="Convert" />
+    </form>
+    <p id="result" />
+    <script>
+        document.getElementById("urlform").onsubmit = (event) => {
+            event.preventDefault();
+            let result_paragraph = document.getElementById("result");
+            let text = document.getElementById("inputurl").value;
+            let url = text.match(/^(https?:\/\/)?(www\.)?oracle\.com\/webapps\/redirect\/signon\?nexturl=(.+)$/);
+            if (!url || !url[3]) url = text;
+            else url = url[3];
+            let url_match = url.match(/^(https?:\/\/)?download\.oracle\.com\/otn(-pub)?\/java\/jdk\/(\d)u(\d+-b\d+\/([A-Fa-f\d]+\/)?)(.+)$/);
+            if (!url_match || !url_match[6]) {
+                result_paragraph.textContent = `Invalid download URL entered: ${text}`;
+                return;
+            }
+            let i586_word;
+            if (url_match[6].includes('linux')) i586_word = 'linux';
+            else if (url_match[6].includes('macosx')) i586_word = 'unix';
+            else if (url_match[6].includes('solaris')) i586_word = 'solaris';
+            else if (url_match[6].includes('windows')) i586_word = 'windows';
+            else {
+                result_paragraph.textContent = `Invalid file name entered: ${url_match[6]} (it doesn't seem to contain 'linux', 'solaris', 'macosx' or 'windows')`;
+                return;
+            }
+            let output_url = `https://javadl.oracle.com/webapps/download/GetFile/1.${url_match[3]}.0_${url_match[4]}${i586_word}-i586/${url_match[6]}`;
+            result_paragraph.innerHTML = `Sign-in-free download URL: <a href="${output_url.replace('"', '&quot;')}">${output_url.replace('&', '&amp;').replace('<', '&lt;')}</a><br>(the URL wasn't tested so it isn't guaranteed to work)`;
+        };
+    </script>
+    <h2>How to use</h2>
+    <ul>
+        <li>Go to the <a href="https://www.oracle.com/java/technologies/javase-jre8-downloads.html">Java SE 8 download page</a> or the <a href="https://www.oracle.com/java/technologies/oracle-java-archive-downloads.html">Archive</a></li>
+        <li>Click a link of your choice</li>
+        <li>Review and accept the License Agreement</li>
+        <li>Right click the green button and copy the URL</li>
+        <li>Paste it here</li>
+        <li>Hope that the link works</li>
+        <li>If it doesn't, you can try a similar version. For example JRE 7 Win x64 doesn't work, while x86 does</li>
+    </ul>
+    <p>Based on <a href="https://gist.github.com/wavezhang/ba8425f24a968ec9b2a8619d7c2d86a6#gistcomment-3377085">this thread</a> on a solution by <a href="https://github.com/rathaROG">rathaROG</a> and <a href="https://github.com/starchivore">starchivore</a>.<br />
+    Made by <a href="https://github.com/KaDiWa4">KaDiWa</a><br />
+    Last updated: 2020-08-09</p>
+</body>
+</html>
