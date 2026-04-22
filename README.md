@@ -1,5 +1,5 @@
 # java-url-converter
-Online Converter for Java SE Download URLs for Java 8 or older
+Java SE Download URL Converter - Converts a Java SE 8 or lower download URL into a URL that works without signing in
 
 > [!NOTE]
 > It may contain some AI-processed code.
