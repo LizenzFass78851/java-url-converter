@@ -5,97 +5,196 @@
     <title>Java SE Download URL Converter</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
+        :root {
+            color-scheme: light;
+            --bg: #eef8f8;
+            --surface: #ffffff;
+            --surface-strong: #e8f4f4;
+            --primary: #0d9c95;
+            --primary-strong: #23b6ae;
+            --on-primary: #ffffff;
+            --text: #102c2d;
+            --muted: #4d6f70;
+            --shadow: 0 24px 60px rgba(14, 29, 33, 0.12);
+            --radius: 32px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            margin: 100;
-            font-family: 'verdana', sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Roboto', 'Segoe UI', sans-serif;
+            background: radial-gradient(circle at top left, rgba(103, 80, 164, 0.15), transparent 25%),
+                        radial-gradient(circle at right, rgba(103, 80, 164, 0.08), transparent 18%),
+                        var(--bg);
+            color: var(--text);
             line-height: 1.6;
         }
+
         .container {
-            max-width: 800px;
+            max-width: 920px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 36px 28px 48px;
         }
+
         .card {
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            padding: 24px;
-            margin: 16px 0;
+            background: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 32px;
+            margin: 24px 0;
+            border: 1px solid rgba(103, 80, 164, 0.08);
         }
+
+        .hero {
+            padding: 36px;
+        }
+
         h1 {
-            font-weight: 500;
-            color: #1abc9c;
-            margin-bottom: 8px;
+            font-size: clamp(2.4rem, 4.2vw, 3.4rem);
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0 0 16px;
+            line-height: 1.05;
         }
+
+        .subtitle,
         p {
-            margin: 8px 0;
+            margin: 0 0 18px;
+            color: var(--muted);
+            font-size: 1rem;
         }
+
         form {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
+            display: grid;
+            gap: 18px;
         }
+
         #inputurl {
-            padding: 12px 16px;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 16px;
-            font-family: inherit;
-        }
-        input[type="submit"] {
-            background-color: #1abc9c;
-            color: white;
+            width: 100%;
+            padding: 18px 20px;
             border: none;
-            padding: 12px 24px;
             border-radius: 24px;
-            font-size: 16px;
-            font-weight: 500;
+            background: var(--surface-strong);
+            color: var(--text);
+            font-size: 1rem;
+            font-family: inherit;
+            box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.08);
+        }
+
+        #inputurl:focus {
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(103, 80, 164, 0.12);
+        }
+
+        input[type="submit"] {
+            width: auto;
+            min-width: 160px;
+            border: none;
+            border-radius: 28px;
+            padding: 16px 28px;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--on-primary);
+            background: linear-gradient(135deg, #23b6ae, #0d9c95);
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: transform 0.18s ease, filter 0.18s ease;
+            align-self: start;
         }
+
         input[type="submit"]:hover {
-            background-color: #16a085;
+            transform: translateY(-1px);
+            filter: brightness(1.05);
         }
+
         #result {
+            margin: 0;
+            padding: 20px 22px;
+            border-radius: 24px;
+            background: var(--surface-strong);
+            border: 1px solid rgba(13, 156, 149, 0.16);
+            color: var(--text);
             font-weight: 500;
+            min-height: 3rem;
+            word-break: break-word;
+            display: none;
         }
+
+        #result:not(:empty) {
+            display: block;
+        }
+
         #result a {
-            color: #1abc9c;
+            color: var(--primary);
             text-decoration: none;
         }
+
         #result a:hover {
             text-decoration: underline;
         }
+
         h2 {
-            font-weight: 500;
-            color: #333;
+            margin-top: 0;
+            color: var(--text);
+            font-weight: 600;
         }
+
         ul {
-            padding-left: 20px;
+            padding-left: 1.4rem;
+            color: var(--muted);
         }
+
         li {
-            margin: 8px 0;
+            margin: 10px 0;
         }
-        @media (max-width: 600px) {
+
+        @media (max-width: 700px) {
             .container {
-                padding: 10px;
+                padding: 28px 18px 36px;
             }
-            .card {
-                padding: 16px;
+
+            .card,
+            .hero {
+                padding: 24px;
+            }
+
+            input[type="submit"] {
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <h1>Java SE Download URL Converter</h1>
-    <p>Converts a Java SE <strong>8 or lower</strong> download URL into a URL that works without signing in.</p>
-    <form id="urlform">
-        <input type="url" id="inputurl" placeholder="https://www.oracle.com/webapps/redirect/signon?nexturl=https://download.oracle.com/otn/java/jdk/8u261-b12/a4634525489241b9a9e1aa73d9e118e6/jre-8u261-windows-x64.tar.gz" size="150" required />
-        <input type="submit" value="Convert" />
-    </form>
-    <p id="result" />
+    <div class="container">
+        <div class="card hero">
+            <h1>Java SE Download URL Converter</h1>
+            <p class="subtitle">Converts a Java SE <strong>8 or lower</strong> download URL into a URL that works without signing in.</p>
+            <form id="urlform">
+                <input type="url" id="inputurl" placeholder="https://www.oracle.com/webapps/redirect/signon?nexturl=https://download.oracle.com/otn/java/jdk/8u261-b12/a4634525489241b9a9e1aa73d9e118e6/jre-8u261-windows-x64.tar.gz" size="150" required />
+                <input type="submit" value="Convert" />
+            </form>
+            <p id="result"></p>
+        </div>
+        <div class="card">
+            <h2>How to use</h2>
+            <ul>
+                <li>Go to the <a href="https://www.oracle.com/java/technologies/javase-jre8-downloads.html">Java SE 8 download page</a> or the <a href="https://www.oracle.com/java/technologies/oracle-java-archive-downloads.html">Archive</a></li>
+                <li>Click a link of your choice</li>
+                <li>Review and accept the License Agreement</li>
+                <li>Right click the green button and copy the URL</li>
+                <li>Paste it here</li>
+                <li>Hope that the link works</li>
+                <li>If it doesn't, you can try a similar version. For example JRE 7 Win x64 doesn't work, while x86 does</li>
+            </ul>
+            <p>Based on <a href="https://gist.github.com/wavezhang/ba8425f24a968ec9b2a8619d7c2d86a6#gistcomment-3377085">this thread</a> on a solution by <a href="https://github.com/rathaROG">rathaROG</a> and <a href="https://github.com/starchivore">starchivore</a>.<br />
+            Made by <a href="https://github.com/KaDiWa4">KaDiWa</a><br />
+            Modified by <a href="https://github.com/LizenzFass78851">LizenzFass78851</a><br />
+            Last updated: 2026-07-12</p>
+        </div>
+    </div>
     <script>
         document.getElementById("urlform").onsubmit = (event) => {
             event.preventDefault();
@@ -122,19 +221,5 @@
             result_paragraph.innerHTML = `Sign-in-free download URL: <a href="${output_url.replace('"', '&quot;')}">${output_url.replace('&', '&amp;').replace('<', '&lt;')}</a><br>(the URL wasn't tested so it isn't guaranteed to work)`;
         };
     </script>
-    <h2>How to use</h2>
-    <ul>
-        <li>Go to the <a href="https://www.oracle.com/java/technologies/javase-jre8-downloads.html">Java SE 8 download page</a> or the <a href="https://www.oracle.com/java/technologies/oracle-java-archive-downloads.html">Archive</a></li>
-        <li>Click a link of your choice</li>
-        <li>Review and accept the License Agreement</li>
-        <li>Right click the green button and copy the URL</li>
-        <li>Paste it here</li>
-        <li>Hope that the link works</li>
-        <li>If it doesn't, you can try a similar version. For example JRE 7 Win x64 doesn't work, while x86 does</li>
-    </ul>
-    <p>Based on <a href="https://gist.github.com/wavezhang/ba8425f24a968ec9b2a8619d7c2d86a6#gistcomment-3377085">this thread</a> on a solution by <a href="https://github.com/rathaROG">rathaROG</a> and <a href="https://github.com/starchivore">starchivore</a>.<br />
-    Made by <a href="https://github.com/KaDiWa4">KaDiWa</a><br />
-    Modified by <a href="https://github.com/LizenzFass78851">LizenzFass78851</a><br />
-    Last updated: 2026-04-21</p>
 </body>
 </html>
